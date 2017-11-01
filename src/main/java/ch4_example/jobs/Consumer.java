@@ -1,4 +1,4 @@
-package jobs;
+package ch4_example.jobs;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 

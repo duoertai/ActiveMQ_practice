@@ -1,4 +1,4 @@
-package portfolio;
+package ch4_example.portfolio;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQMapMessage;

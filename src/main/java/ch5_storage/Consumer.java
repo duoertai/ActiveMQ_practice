@@ -1,17 +1,17 @@
-package portfolio;
+package ch5_storage;
 
+import ch4_example.portfolio.Listener;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
 public class Consumer {
-    private static String brokerURL = "tcp://localhost:61616";
-    private static transient ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
-
+    private static transient ConnectionFactory connectionFactory;
     private transient Connection connection;
     private transient Session session;
 
-    public Consumer() throws JMSException {
+    public Consumer(String brokerURL) throws JMSException {
+        connectionFactory = new ActiveMQConnectionFactory(brokerURL);
         connection = connectionFactory.createConnection();
         connection.start();
         session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -27,8 +27,17 @@ public class Consumer {
     }
 
     public static void main(String[] args) throws JMSException {
-        Consumer consumer = new Consumer();
-        for (String stock: args) {
+        if (args.length == 0) {
+            System.err.println("Please define connection URI!");
+            return;
+        }
+
+        Consumer consumer = new Consumer(args[0]);
+
+        String[] topics = new String[args.length - 1];
+        System.arraycopy(args, 1, topics, 0, args.length - 1);
+
+        for (String stock: topics) {
             Topic destination = consumer.getSession().createTopic("STOCKS." + stock);
             MessageConsumer messageConsumer = consumer.getSession().createConsumer(destination);
             messageConsumer.setMessageListener(new Listener());

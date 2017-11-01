@@ -1,10 +1,9 @@
-package jobs;
+package ch4_example.jobs;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
-import java.util.List;
 
 public class Listener implements MessageListener {
     private String job;

@@ -1,4 +1,4 @@
-package portfolio;
+package ch4_example.portfolio;
 
 import javax.jms.MapMessage;
 import javax.jms.Message;
